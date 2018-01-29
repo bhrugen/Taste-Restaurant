@@ -11,9 +11,9 @@ namespace TasteRestaurant.Pages.FoodTypes
 {
     public class DeleteModel : PageModel
     {
-        private readonly TasteRestaurant.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DeleteModel(TasteRestaurant.Data.ApplicationDbContext context)
+        public DeleteModel(ApplicationDbContext context)
         {
             _context = context;
         }
