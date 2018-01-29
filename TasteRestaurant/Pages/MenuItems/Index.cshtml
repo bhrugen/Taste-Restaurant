@@ -4,5 +4,56 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+
+<br />
+<h2>Menu Item List</h2>
+<br />
+<p>
+    <a asp-page="Create" type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus"></span>
+        &nbsp; Create New
+    </a>
+</p>
+<div class="form-border">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(m => m.MenuItem[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.MenuItem[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.MenuItem[0].CategoryType.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.MenuItem[0].FoodType.Name)
+            </th>
+
+            <th></th>
+        </tr>
+        @foreach (var item in Model.MenuItem)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(m => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.CategoryType.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.FoodType.Name)
+            </td>
+
+            <td>
+                @Html.Partial("_TableButtonsPartial", new IndividualButtonPartial { Id = item.Id })
+            </td>
+        </tr>
+        }
+    </table>
+</div>
+
 
