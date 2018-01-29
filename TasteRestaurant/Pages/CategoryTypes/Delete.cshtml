@@ -4,5 +4,36 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
+<br />
+<h2>Delete Category Type</h2>
+<hr />
+
+<form method="post">
+    <div class="form-border">
+        <input type="hidden" asp-for="CategoryType.Id" />
+        <fieldset disabled>
+            <div class="form-group row">
+                <div class="col-sm-2">
+                    <label asp-for="CategoryType.Name" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="CategoryType.Name" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-2">
+                    <label asp-for="CategoryType.DisplayOrder" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="CategoryType.DisplayOrder" class="form-control" />
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Delete" class="btn btn-sm btn-danger" />
+            <a asp-page="Index" class="btn btn-sm btn-success">Back to List</a>
+        </div>
+    </div>
+</form>
 
