@@ -34,7 +34,7 @@
                 @Html.DisplayFor(m => item.DisplayOrder)
             </td>
             <td>
-                EDIT|DELETE|DETAILS
+                @Html.Partial("_TableButtonsPartial", new IndividualButtonPartial { Id = item.Id })
             </td>
         </tr>
         }
