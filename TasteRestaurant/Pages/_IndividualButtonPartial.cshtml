@@ -1,0 +1,9 @@
+﻿@model Data.IndividualButtonPartial
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<a type="button" class="btn @Model.ButtonType" asp-page="@Model.Page" 
+   asp-route-id="@Model.ActionParameters">
+    <span class="glyphicon glyphicon-@Model.Glyph"></span>
+</a>
