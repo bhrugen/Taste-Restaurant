@@ -11,9 +11,9 @@ namespace TasteRestaurant.Pages.FoodTypes
 {
     public class CreateModel : PageModel
     {
-        private readonly TasteRestaurant.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public CreateModel(TasteRestaurant.Data.ApplicationDbContext context)
+        public CreateModel(ApplicationDbContext context)
         {
             _context = context;
         }
