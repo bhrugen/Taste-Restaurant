@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -45,6 +46,50 @@ namespace TasteRestaurant.Pages.MenuItems
             }
 
             return Page();
+        }
+
+        public async Task<IActionResult> OnPost()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+
+            if (files[0] != null && files[0].Length > 0)
+            {
+                var uploads = Path.Combine(webRootPath, "images");
+                var extension = files[0].FileName.Substring(files[0].FileName.LastIndexOf("."), files[0].FileName.Length - files[0].FileName.LastIndexOf("."));
+
+                if (System.IO.File.Exists(Path.Combine(uploads, MenuItemVM.MenuItem.Id + extension)))
+                {
+                    System.IO.File.Delete(Path.Combine(uploads, MenuItemVM.MenuItem.Id + extension));
+                }
+
+                using (var fileStream = new FileStream(Path.Combine(uploads, MenuItemVM.MenuItem.Id + extension), FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+                MenuItemVM.MenuItem.Image = @"\images\" + MenuItemVM.MenuItem.Id + extension;
+            }
+
+            var MenuItemFromdb = _db.MenuItem.Where(m => m.Id == MenuItemVM.MenuItem.Id).FirstOrDefault();
+            if (MenuItemVM.MenuItem.Image != null)
+            {
+                MenuItemFromdb.Image = MenuItemVM.MenuItem.Image;
+            }
+            MenuItemFromdb.Name = MenuItemVM.MenuItem.Name;
+            MenuItemFromdb.Descrption = MenuItemVM.MenuItem.Descrption;
+            MenuItemFromdb.Price = MenuItemVM.MenuItem.Price;
+            MenuItemFromdb.Spicyness = MenuItemVM.MenuItem.Spicyness;
+            MenuItemFromdb.FoodTypeId = MenuItemVM.MenuItem.FoodTypeId;
+            MenuItemFromdb.CategoryId = MenuItemVM.MenuItem.CategoryId;
+
+            await _db.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }
