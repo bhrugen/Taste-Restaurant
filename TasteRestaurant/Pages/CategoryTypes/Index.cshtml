@@ -4,5 +4,40 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<br />
+<h2>Category Type List</h2>
+<br />
+<p>
+    <a asp-page="Create" type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus"></span>
+        &nbsp; Create New
+    </a>
+</p>
+<div class="form-border">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(m => m.CategoryType[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.CategoryType[0].DisplayOrder)
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.CategoryType)
+        { 
+        <tr>
+            <td>
+                @Html.DisplayFor(m => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.DisplayOrder)
+            </td>
+            <td>
+                EDIT|DELETE|DETAILS
+            </td>
+        </tr>
+        }
+    </table>
+</div>
 
