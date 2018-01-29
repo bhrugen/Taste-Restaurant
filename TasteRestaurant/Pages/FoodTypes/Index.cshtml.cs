@@ -11,9 +11,9 @@ namespace TasteRestaurant.Pages.FoodTypes
 {
     public class IndexModel : PageModel
     {
-        private readonly TasteRestaurant.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public IndexModel(TasteRestaurant.Data.ApplicationDbContext context)
+        public IndexModel(ApplicationDbContext context)
         {
             _context = context;
         }
