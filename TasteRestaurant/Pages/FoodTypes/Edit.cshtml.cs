@@ -12,9 +12,9 @@ namespace TasteRestaurant.Pages.FoodTypes
 {
     public class EditModel : PageModel
     {
-        private readonly TasteRestaurant.Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public EditModel(TasteRestaurant.Data.ApplicationDbContext context)
+        public EditModel(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -47,28 +47,12 @@ namespace TasteRestaurant.Pages.FoodTypes
 
             _context.Attach(FoodType).State = EntityState.Modified;
 
-            try
-            {
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FoodTypeExists(FoodType.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+           
 
             return RedirectToPage("./Index");
         }
 
-        private bool FoodTypeExists(int id)
-        {
-            return _context.FoodType.Any(e => e.Id == id);
-        }
+        
     }
 }
