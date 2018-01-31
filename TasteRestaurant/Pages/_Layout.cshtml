@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using TasteRestaurant.Utility
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -30,27 +32,38 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-page="/Order/OrderHistroy">Order Histroy</a></li>
-                    <li><a asp-page="/About">Manage Order</a></li>
-                    <li><a asp-page="/About">Order Pickup</a></li>
-                    <li class="dropdown" data-admin-menu>
-                        <a href="#">Admin
-                            <span class="glyphicon glyphicon-circle-arrow-down"></span> 
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li class="divider"></li>
-                            <li><a asp-page="/CategoryTypes/Index">Category Type</a></li>
-                            <li><a asp-page="/FoodTypes/Index">Food Type</a></li>
-                            <li class="divider"></li>
-                            <li><a asp-page="/MenuItems/Index">Menu Items</a></li>
-                            <li class="divider"></li>
-                        </ul>
-                    </li>
-                    <li style="color:white;">
-                        <a href="#">
-                            <span class="glyphicon glyphicon-shopping-cart"></span> &nbsp;(0)
-                        </a>
-                    </li>
+                    @if (User.IsInRole(SD.AdminEndUser) || User.IsInRole(SD.CustomerEndUser))
+                    {
+                        <li><a asp-page="/Order/OrderHistroy">Order Histroy</a></li>
+                    }
+
+                    @if (User.IsInRole(SD.AdminEndUser))
+                    {
+                        <li><a asp-page="/About">Manage Order</a></li>
+                        <li><a asp-page="/About">Order Pickup</a></li>
+                        <li class="dropdown" data-admin-menu>
+                            <a href="#">
+                                Admin
+                                <span class="glyphicon glyphicon-circle-arrow-down"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="divider"></li>
+                                <li><a asp-page="/CategoryTypes/Index">Category Type</a></li>
+                                <li><a asp-page="/FoodTypes/Index">Food Type</a></li>
+                                <li class="divider"></li>
+                                <li><a asp-page="/MenuItems/Index">Menu Items</a></li>
+                                <li class="divider"></li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole(SD.AdminEndUser) || User.IsInRole(SD.CustomerEndUser))
+                    {
+                        <li style="color:white;">
+                            <a href="#">
+                                <span class="glyphicon glyphicon-shopping-cart"></span> &nbsp;(0)
+                            </a>
+                        </li>
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
