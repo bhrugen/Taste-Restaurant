@@ -9,6 +9,8 @@ namespace TasteRestaurant.Utility
     {
 
         public const string DefaultFoodImage = "default_food.png";
+        public const string AdminEndUser = "Admin";
+        public const string CustomerEndUser = "Customer";
 
     }
 }
