@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -58,6 +59,8 @@ namespace TasteRestaurant.Pages
                 _db.SaveChanges();
 
                 //Add Session and increment count
+                var count = _db.ShoppingCart.Where(c => c.ApplicationUserId == CartObj.ApplicationUserId).ToList().Count();
+                HttpContext.Session.SetInt32("CartCount", count);
 
                 return RedirectToPage("Index");
             }
@@ -71,6 +74,8 @@ namespace TasteRestaurant.Pages
                     MenuItemId = MenuItemFromDb.Id,
                     MenuItem = MenuItemFromDb
                 };
+
+                return Page();
             }
         }
     }

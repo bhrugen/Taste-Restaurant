@@ -1,5 +1,6 @@
-﻿@using TasteRestaurant.Utility
-
+﻿@using Microsoft.AspNetCore.Http
+@using TasteRestaurant.Utility
+@inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,11 +59,24 @@
                     }
                     @if (User.IsInRole(SD.AdminEndUser) || User.IsInRole(SD.CustomerEndUser))
                     {
+                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("CartCount") != null)
+                        {
+                            <li style="color:white;">
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> &nbsp;(@HttpContextAccessor.HttpContext.Session.GetInt32("CartCount"))
+                                </a>
+                            </li>
+
+                        }
+                        else
+                        {
                         <li style="color:white;">
                             <a href="#">
                                 <span class="glyphicon glyphicon-shopping-cart"></span> &nbsp;(0)
                             </a>
                         </li>
+
+                        }
                     }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
