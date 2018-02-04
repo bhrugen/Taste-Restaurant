@@ -4,6 +4,7 @@
     <UserSecretsId>aspnet-TasteRestaurant-9B18D0C2-6296-4EC1-83C5-ABFF2F8614E1</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="jQuery" Version="3.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" PrivateAssets="All" />
