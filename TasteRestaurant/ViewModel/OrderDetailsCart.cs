@@ -10,7 +10,7 @@ namespace TasteRestaurant.ViewModel
     {
         public List<ShoppingCart> listCart { get; set; }
 
-        public  OrderHeader OrderHEader { get; set; }
+        public  OrderHeader OrderHeader { get; set; }
 
     }
 }
