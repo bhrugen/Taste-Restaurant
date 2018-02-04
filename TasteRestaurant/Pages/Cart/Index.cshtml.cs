@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TasteRestaurant.Data;
@@ -48,6 +49,30 @@ namespace TasteRestaurant.Pages.Cart
             }
             detailCart.OrderHeader.PickUpTime = DateTime.Now;
 
+        }
+
+        public IActionResult OnPostPlus(int cartId)
+        {
+            var cart = _db.ShoppingCart.Where(c => c.Id == cartId).FirstOrDefault();
+            cart.Count += 1;
+            _db.SaveChanges();
+            return RedirectToPage("/Cart/Index");
+        }
+
+        public IActionResult OnPostMinus(int cartId)
+        {
+            var cart = _db.ShoppingCart.Where(c => c.Id == cartId).FirstOrDefault();
+            if (cart.Count == 1)
+            {
+                _db.ShoppingCart.Remove(cart);
+                HttpContext.Session.SetInt32("CartCount", _db.ShoppingCart.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count);
+            }
+            else
+            {
+                cart.Count -= 1;
+            }
+            _db.SaveChanges();
+            return RedirectToPage("/Cart/Index");
         }
     }
 }
