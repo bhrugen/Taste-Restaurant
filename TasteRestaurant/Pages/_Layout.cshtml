@@ -62,7 +62,7 @@
                         @if (HttpContextAccessor.HttpContext.Session.GetInt32("CartCount") != null)
                         {
                             <li style="color:white;">
-                                <a href="#">
+                                <a href="/Cart/Index">
                                     <span class="glyphicon glyphicon-shopping-cart"></span> &nbsp;(@HttpContextAccessor.HttpContext.Session.GetInt32("CartCount"))
                                 </a>
                             </li>
@@ -71,7 +71,7 @@
                         else
                         {
                         <li style="color:white;">
-                            <a href="#">
+                            <a href="/Cart/Index">
                                 <span class="glyphicon glyphicon-shopping-cart"></span> &nbsp;(0)
                             </a>
                         </li>

@@ -56,3 +56,10 @@ h2{
     line-height: 1.4285;
     color:#555;
 }
+
+tr.paddingB30pxToTD > td {
+    padding: 10px 20px 10px 20px;
+}
+tr.paddingB30pxToTH > th {
+    padding: 0px 20px 0px 20px;
+}

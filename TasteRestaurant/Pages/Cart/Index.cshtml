@@ -4,5 +4,54 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
 
+<form method="post">
+    <h3>Your Shopping Cart</h3>
+
+    <br />
+    @if (Model.detailCart.listCart.Count > 0)
+    {
+        <div class="thumbnail row">
+            <table width="100%">
+                <tr class="paddingB30pxToTH">
+                    <th></th>
+                    <th style="width:70px;text-align:center">
+                        <label asp-for="@Model.detailCart.listCart.FirstOrDefault().MenuItem.Price"></label>
+                    </th>
+                    <th style="width:70px;text-align:center">
+                        <label asp-for="@Model.detailCart.listCart.FirstOrDefault().Count"></label>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                @foreach (var item in Model.detailCart.listCart)
+                {
+                    <tr style="border-bottom:1px solid #e9e4e4"></tr>
+                    <tr class="paddingB30pxToTD">
+                        <td>
+                            <b>@Html.DisplayFor(c => item.MenuItem.Name)</b>
+                            <br />
+                            @Html.DisplayFor(c => item.MenuItem.Descrption)
+                        </td>
+                        <td style="width:70px;text-align:center">
+                            @Html.DisplayFor(c => item.MenuItem.Price)
+                        </td>
+                        <td style="width:70px;text-align:center">
+                            @Html.DisplayFor(c => item.Count)
+                        </td>
+                        <td>
+                            <button type="submit" asp-page-handler="plus" asp-route-cartId="@item.Id" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                            <button type="submit" asp-page-handler="minus" asp-route-cartId="@item.Id" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </button>
+                        </td>
+                    </tr>
+
+                }
+            </table>
+        </div>
+    }
+
+</form>
