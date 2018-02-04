@@ -65,13 +65,16 @@ namespace TasteRestaurant.Pages.Cart
             if (cart.Count == 1)
             {
                 _db.ShoppingCart.Remove(cart);
+                _db.SaveChanges();
+                var cnt = _db.ShoppingCart.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count;
                 HttpContext.Session.SetInt32("CartCount", _db.ShoppingCart.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count);
             }
             else
             {
                 cart.Count -= 1;
+                _db.SaveChanges();
             }
-            _db.SaveChanges();
+            
             return RedirectToPage("/Cart/Index");
         }
     }
