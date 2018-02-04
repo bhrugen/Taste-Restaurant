@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TasteRestaurant.Data;
+using TasteRestaurant.Utility;
 using TasteRestaurant.ViewModel;
 
 namespace TasteRestaurant.Pages.Cart
@@ -76,6 +77,40 @@ namespace TasteRestaurant.Pages.Cart
             }
             
             return RedirectToPage("/Cart/Index");
+        }
+
+        public IActionResult OnPost()
+        {
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+
+            detailCart.listCart = _db.ShoppingCart.Where(c => c.ApplicationUserId == claim.Value).ToList();
+
+            OrderHeader orderHeader = detailCart.OrderHeader;
+            detailCart.OrderHeader.OrderDate = DateTime.Now;
+            detailCart.OrderHeader.UserId = claim.Value;
+            detailCart.OrderHeader.Status = SD.StatusSubmitted;
+            _db.OrderHeader.Add(orderHeader);
+            _db.SaveChanges();
+
+            foreach (var item in detailCart.listCart)
+            {
+                item.MenuItem = _db.MenuItem.FirstOrDefault(m => m.Id == item.MenuItemId);
+                OrderDetail orderDetails = new OrderDetail
+                {
+                    MenuItemId = item.MenuItemId,
+                    OrderId = orderHeader.Id,
+                    Name = item.MenuItem.Name,
+                    Description = item.MenuItem.Descrption,
+                    Price = item.MenuItem.Price,
+                    Count = item.Count
+                };
+                _db.OrderDetail.Add(orderDetails);
+            }
+            _db.ShoppingCart.RemoveRange(detailCart.listCart);
+            HttpContext.Session.SetInt32("CartCount", 0);
+            _db.SaveChanges();
+            return RedirectToPage("../Index");
         }
     }
 }
