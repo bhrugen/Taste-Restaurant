@@ -94,3 +94,38 @@
     }
 
 </form>
+
+@section Scripts{ 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var curDT = new Date();
+            //12pm-10pm
+            //curDT.setHours(21);
+
+            var minTime = "";
+            if (curDT.getHours() < 11) {
+                minTime = '12:00pm';
+            }
+            else {
+                if (curDT.getMinutes() < 30) {
+                    minTime = (curDT.getHours() + 1).toString() + ':30pm'
+                }
+                else {
+                    minTime = (curDT.getHours() + 2).toString() + ':00pm'
+                }
+            }
+
+            if (curDT.getHours() > 20) { 
+                //No more orders
+                $('#timepicker').prop('disabled', true);
+                $('#btnPlaceOrder').prop('disabled', true);
+                $('#lblShopClosed').show();
+            }
+
+            $('#timepicker').timepicker({
+                'minTime': minTime,
+                'maxTime': '10:00pm'
+            });
+        });
+    </script>
+}
