@@ -39,6 +39,7 @@ namespace TasteRestaurant
                 {
                     options.Conventions.AuthorizeFolder("/Account/Manage");
                     options.Conventions.AuthorizePage("/Account/Logout");
+                    options.Conventions.AuthorizePage("/Details");
                 });
 
             services.AddAuthorization(options =>

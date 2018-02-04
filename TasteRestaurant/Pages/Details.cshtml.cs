@@ -11,9 +11,12 @@ using TasteRestaurant.Data;
 
 namespace TasteRestaurant.Pages
 {
+
     public class DetailsModel : PageModel
     {
         private readonly ApplicationDbContext _db;
+        [TempData]
+        public string StatusMessage { get; set; }
 
         public DetailsModel(ApplicationDbContext db)
         {
@@ -25,7 +28,8 @@ namespace TasteRestaurant.Pages
 
         public void OnGet(int id)
         {
-            var MenuItemFromDb=_db.MenuItem.Include(m=>m.CategoryType).Include(m=>m.FoodType).FirstOrDefault();
+            var MenuItemFromDb=_db.MenuItem.Include(m=>m.CategoryType).Include(m=>m.FoodType)
+                                    .Where(x=>x.Id==id).FirstOrDefault();
 
 
             CartObj = new ShoppingCart()
@@ -61,7 +65,7 @@ namespace TasteRestaurant.Pages
                 //Add Session and increment count
                 var count = _db.ShoppingCart.Where(c => c.ApplicationUserId == CartObj.ApplicationUserId).ToList().Count();
                 HttpContext.Session.SetInt32("CartCount", count);
-
+                StatusMessage = "Item Added to Cart";
                 return RedirectToPage("Index");
             }
             else

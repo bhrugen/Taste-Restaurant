@@ -13,7 +13,8 @@ namespace TasteRestaurant.Pages
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _db;
-
+        [TempData]
+        public string StatusMessage { get; set; }
         public IndexModel(ApplicationDbContext db)
         {
             _db = db;

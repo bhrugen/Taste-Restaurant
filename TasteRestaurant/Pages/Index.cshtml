@@ -4,6 +4,10 @@
     ViewData["Title"] = "Home page";
 }
 
+<br />
+@Html.Partial("_StatusMessage",Model.StatusMessage)
+<br />
+
 @foreach (var category in Model.IndexVM.CategoryTypes)
 {
     <h3 style="padding-left:50px;" class="text-success">@category.Name</h3>
