@@ -53,6 +53,12 @@ namespace TasteRestaurant
                 facebookOptions.AppSecret = "138842076f04812382f9f7c57505720e";
             });
 
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = "609302538982-l559fa4rrjtkhlr642sn8k5gdhomu22q.apps.googleusercontent.com";
+                googleOptions.ClientSecret = "Q5twNVtCLCvYmNiygwG7LDsJ";
+            });
+
             // Register no-op EmailSender used by account confirmation and password reset during development
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             services.AddSingleton<IEmailSender, EmailSender>();
