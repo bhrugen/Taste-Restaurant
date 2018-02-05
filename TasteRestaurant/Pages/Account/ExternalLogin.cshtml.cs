@@ -43,6 +43,10 @@ namespace TasteRestaurant.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            public string PhoneNumber { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
         }
 
         public IActionResult OnGetAsync()
@@ -87,11 +91,14 @@ namespace TasteRestaurant.Pages.Account
                 // If the user does not have an account, then ask the user to create an account.
                 ReturnUrl = returnUrl;
                 LoginProvider = info.LoginProvider;
+                var name = info.Principal.FindFirstValue(ClaimTypes.Name).Split(' ');
                 if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
                 {
                     Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        FirstName = name[0].ToString(),
+                        LastName = name[1].ToString()
                     };
                 }
                 return Page();
@@ -108,7 +115,17 @@ namespace TasteRestaurant.Pages.Account
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+
+                var name = info.Principal.FindFirstValue(ClaimTypes.Name).Split(' ');
+
+                var user = new ApplicationUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    FirstName = name[0].ToString(),
+                    LastName = name[1].ToString(),
+                    PhoneNumber=Input.PhoneNumber
+                };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
