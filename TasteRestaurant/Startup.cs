@@ -47,6 +47,12 @@ namespace TasteRestaurant
                 options.AddPolicy(SD.AdminEndUser, policy => policy.RequireRole(SD.AdminEndUser));
             });
 
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = "325549147934171";
+                facebookOptions.AppSecret = "138842076f04812382f9f7c57505720e";
+            });
+
             // Register no-op EmailSender used by account confirmation and password reset during development
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             services.AddSingleton<IEmailSender, EmailSender>();
