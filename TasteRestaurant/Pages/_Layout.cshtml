@@ -38,7 +38,7 @@
                 <ul class="nav navbar-nav">
                     @if (User.IsInRole(SD.AdminEndUser) || User.IsInRole(SD.CustomerEndUser))
                     {
-                        <li><a asp-page="/Order/OrderHistroy">Order Histroy</a></li>
+                        <li><a asp-page="/Order/OrderHistory">Order Histroy</a></li>
                     }
 
                     @if (User.IsInRole(SD.AdminEndUser))
