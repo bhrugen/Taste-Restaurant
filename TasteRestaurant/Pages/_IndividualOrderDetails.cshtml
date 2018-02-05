@@ -1,4 +1,49 @@
-﻿@page
+﻿@model TasteRestaurant.ViewModel.OrderDetailsViewModel
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+<div class="col-sm-5">
+    Order Number : @Model.OrderHeader.Id
+    <ul>
+        @foreach (var details in Model.OrderDetail)
+        { 
+            <li>@details.Name x @details.Count</li>
+        }
+    </ul>
+</div>
+<div class="col-sm-5">
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-2">
+            Order Total
+        </div>
+        <div class="col-sm-6">
+            $@Model.OrderHeader.OrderTotal
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-2">
+            PickUp Time : 
+        </div>
+        <div class="col-sm-6">
+            @Model.OrderHeader.OrderDate.ToShortDateString() &nbsp; @Model.OrderHeader.PickUpTime.ToShortTimeString()
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-2">
+            Order Status : 
+        </div>
+        <div class="col-sm-6">
+            @Model.OrderHeader.Status
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-2">
+            Comments : 
+        </div>
+        <div class="col-sm-6">
+            @Model.OrderHeader.Comments
+        </div>
+    </div>
+</div>
+<div class="col-sm-2"></div>
