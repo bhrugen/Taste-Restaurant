@@ -110,7 +110,7 @@ namespace TasteRestaurant.Pages.Cart
             _db.ShoppingCart.RemoveRange(detailCart.listCart);
             HttpContext.Session.SetInt32("CartCount", 0);
             _db.SaveChanges();
-            return RedirectToPage("../Index");
+            return RedirectToPage("../Order/OrderConfirmation", new  { id=orderHeader.Id });
         }
     }
 }

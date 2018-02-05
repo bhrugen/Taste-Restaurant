@@ -4,5 +4,17 @@
     ViewData["Title"] = "OrderConfirmation";
 }
 
-<h2>OrderConfirmation</h2>
+<h2>Order Confirmation Page</h2>
+<br />
 
+@if (Model.OrderDetailsViewModel.OrderHeader != null)
+{
+<div class="thumbnail row">
+    @Html.Partial("_IndividualOrderDetails", Model.OrderDetailsViewModel)
+</div>
+    <a asp-page="../Index" class="btn btn-success">Pleace Another Order</a>
+}
+else
+{
+    <div class="text-danger"> Error... Please try again</div>
+}
