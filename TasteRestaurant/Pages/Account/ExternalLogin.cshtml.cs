@@ -137,6 +137,9 @@ namespace TasteRestaurant.Pages.Account
                         return LocalRedirect(Url.GetLocalUrl(returnUrl));
                     }
                 }
+                Input.FirstName = name[0].ToString();
+                Input.LastName = name[1].ToString();
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
