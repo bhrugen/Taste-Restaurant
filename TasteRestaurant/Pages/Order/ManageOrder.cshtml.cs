@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TasteRestaurant.Data;
+using TasteRestaurant.Utility;
 using TasteRestaurant.ViewModel;
 
 namespace TasteRestaurant.Pages.Order
@@ -34,6 +35,31 @@ namespace TasteRestaurant.Pages.Order
 
                 OrderDetailsViewModel.Add(individual);
             }
+        }
+
+
+        public IActionResult OnPostOrderPrepare(int orderId)
+        {
+            OrderHeader orderHeader = _db.OrderHeader.Find(orderId);
+            orderHeader.Status = SD.StatusInProcess;
+            _db.SaveChanges();
+            return RedirectToPage("/Order/ManageOrder");
+        }
+
+        public IActionResult OnPostOrderReady(int orderId)
+        {
+            OrderHeader orderHeader = _db.OrderHeader.Find(orderId);
+            orderHeader.Status = SD.StatusReady;
+            _db.SaveChanges();
+            return RedirectToPage("/Order/ManageOrder");
+        }
+
+        public IActionResult OnPostOrderCancel(int orderId)
+        {
+            OrderHeader orderHeader = _db.OrderHeader.Find(orderId);
+            orderHeader.Status = SD.StatusCancelled;
+            _db.SaveChanges();
+            return RedirectToPage("/Order/ManageOrder");
         }
     }
 }
