@@ -43,7 +43,7 @@
 
                     @if (User.IsInRole(SD.AdminEndUser))
                     {
-                        <li><a asp-page="/About">Manage Order</a></li>
+                        <li><a asp-page="/Order/ManageOrder">Manage Order</a></li>
                         <li><a asp-page="/About">Order Pickup</a></li>
                         <li class="dropdown" data-admin-menu>
                             <a href="#">
@@ -73,11 +73,11 @@
                         }
                         else
                         {
-                        <li style="color:white;">
-                            <a href="/Cart/Index">
-                                <span class="glyphicon glyphicon-shopping-cart"></span> &nbsp;(0)
-                            </a>
-                        </li>
+                            <li style="color:white;">
+                                <a href="/Cart/Index">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> &nbsp;(0)
+                                </a>
+                            </li>
 
                         }
                     }
@@ -97,7 +97,7 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.js" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/js/AdminMenu.js" asp-append-version="true"></script>
     </environment>
