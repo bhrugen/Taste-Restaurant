@@ -23,17 +23,67 @@ namespace TasteRestaurant.Pages.Order
         [BindProperty]
         public List<OrderDetailsViewModel> OrderDetailsViewModel { get; set; }
 
-        public void OnGet()
+        public void OnGet(string option = null, string search = null)
         {
-            List<OrderHeader> OrderHeaderList = _db.OrderHeader.Where(u => u.Status == SD.StatusReady).OrderByDescending(u => u.PickUpTime).ToList();
-
-            foreach (OrderHeader item in OrderHeaderList)
+            if (search != null)
             {
-                OrderDetailsViewModel individual = new ViewModel.OrderDetailsViewModel();
-                individual.OrderDetail = _db.OrderDetail.Where(o => o.OrderId == item.Id).ToList();
-                individual.OrderHeader = item;
+                var user = new ApplicationUser();
+                List<OrderHeader> OrderHeaderList = new List<OrderHeader>();
+                if (option == "order")
+                {
+                    OrderHeaderList = _db.OrderHeader.Where(o => o.Id == Convert.ToInt32(search)).ToList();
+                }
+                else
+                {
+                    if (option == "email")
+                    {
+                        user = _db.Users.Where(u => u.Email.ToLower().Contains(search.ToLower())).FirstOrDefault();
+                    }
+                    else
+                    {
+                        if (option == "phone")
+                        {
+                            user = _db.Users.Where(u => u.PhoneNumber.ToLower().Contains(search.ToLower())).FirstOrDefault();
+                        }
+                        else
+                        {
+                            if (option == "name")
+                            {
+                                user = _db.Users.Where(u => u.FirstName.ToLower().Contains(search.ToLower()) || u.LastName.ToLower().Contains(search.ToLower())).FirstOrDefault();
+                            }
+                        }
+                    }
+                }
+                if (user != null || OrderHeaderList.Count > 0)
+                {
+                    if (OrderHeaderList.Count == 0)
+                    {
+                        OrderHeaderList = _db.OrderHeader.Where(o => o.UserId == user.Id).OrderByDescending(o => o.PickUpTime).ToList();
+                    }
+                    foreach (OrderHeader item in OrderHeaderList)
+                    {
+                        OrderDetailsViewModel individual = new ViewModel.OrderDetailsViewModel();
+                        individual.OrderDetail = _db.OrderDetail.Where(o => o.OrderId == item.Id).ToList();
+                        individual.OrderHeader = item;
 
-                OrderDetailsViewModel.Add(individual);
+                        OrderDetailsViewModel.Add(individual);
+                    }
+
+                }
+            }
+            else
+            {
+                //If there is no search criteria
+                List<OrderHeader> OrderHeaderList = _db.OrderHeader.Where(u => u.Status == SD.StatusReady).OrderByDescending(u => u.PickUpTime).ToList();
+
+                foreach (OrderHeader item in OrderHeaderList)
+                {
+                    OrderDetailsViewModel individual = new ViewModel.OrderDetailsViewModel();
+                    individual.OrderDetail = _db.OrderDetail.Where(o => o.OrderId == item.Id).ToList();
+                    individual.OrderHeader = item;
+
+                    OrderDetailsViewModel.Add(individual);
+                }
             }
         }
 
