@@ -60,11 +60,12 @@ namespace TasteRestaurant.Pages.MenuItems
 
             string webRootPath = _hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
+            var MenuItemFromdb = _db.MenuItem.Where(m => m.Id == MenuItemVM.MenuItem.Id).FirstOrDefault();
 
             if (files[0] != null && files[0].Length > 0)
             {
                 var uploads = Path.Combine(webRootPath, "images");
-                var extension = files[0].FileName.Substring(files[0].FileName.LastIndexOf("."), files[0].FileName.Length - files[0].FileName.LastIndexOf("."));
+                var extension = MenuItemFromdb.Image.Substring(MenuItemFromdb.Image.LastIndexOf("."), MenuItemFromdb.Image.Length - MenuItemFromdb.Image.LastIndexOf("."));
 
                 if (System.IO.File.Exists(Path.Combine(uploads, MenuItemVM.MenuItem.Id + extension)))
                 {
@@ -75,10 +76,11 @@ namespace TasteRestaurant.Pages.MenuItems
                 {
                     files[0].CopyTo(fileStream);
                 }
+                extension = files[0].FileName.Substring(files[0].FileName.LastIndexOf("."), files[0].FileName.Length - files[0].FileName.LastIndexOf("."));
                 MenuItemVM.MenuItem.Image = @"\images\" + MenuItemVM.MenuItem.Id + extension;
             }
 
-            var MenuItemFromdb = _db.MenuItem.Where(m => m.Id == MenuItemVM.MenuItem.Id).FirstOrDefault();
+            
             if (MenuItemVM.MenuItem.Image != null)
             {
                 MenuItemFromdb.Image = MenuItemVM.MenuItem.Image;
