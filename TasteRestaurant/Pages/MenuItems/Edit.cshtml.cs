@@ -72,11 +72,11 @@ namespace TasteRestaurant.Pages.MenuItems
                     System.IO.File.Delete(Path.Combine(uploads, MenuItemVM.MenuItem.Id + extension));
                 }
 
+                extension = files[0].FileName.Substring(files[0].FileName.LastIndexOf("."), files[0].FileName.Length - files[0].FileName.LastIndexOf("."));
                 using (var fileStream = new FileStream(Path.Combine(uploads, MenuItemVM.MenuItem.Id + extension), FileMode.Create))
                 {
                     files[0].CopyTo(fileStream);
                 }
-                extension = files[0].FileName.Substring(files[0].FileName.LastIndexOf("."), files[0].FileName.Length - files[0].FileName.LastIndexOf("."));
                 MenuItemVM.MenuItem.Image = @"\images\" + MenuItemVM.MenuItem.Id + extension;
             }
 
